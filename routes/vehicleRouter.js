@@ -28,12 +28,6 @@ vehicleRouter.route('/')
             })
             
             .catch((err) => {
-                if('duplicate' in err){
-                    console.log("Loop entered");
-                    
-                    err = new Error("Duplcation is not allowed");
-                    err.status = 404;
-                }
                 next(err);
             })
     })
