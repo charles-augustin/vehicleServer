@@ -12,6 +12,8 @@ var mongoose = require('mongoose');
 
 const url = config.mongoUrl;
 
+const vehicleRouter = require('./routes/vehicleRouter');
+
 //for connecting to the mongo db
 mongoose.connect(url).then((db) => {
   console.log("Connected to the server successfully");
@@ -33,6 +35,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use('/vehicles', vehicleRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
