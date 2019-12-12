@@ -3,8 +3,11 @@ const clientRouter = express.Router();
 
 const Clients = require('../model/client');
 
+const cors = require('./cors');
+
 clientRouter.route('/')
-    .get((req, res, next) => {
+    .options(cors.corsWithOptions, (req, res) => {res.sendStatus = 200;})
+    .get(cors.cors, (req, res, next) => {
         Clients.find(req.query)
             .then((client) => {
                 res.statusCode = 200;
@@ -13,7 +16,7 @@ clientRouter.route('/')
             }, (err) => next(err))
             .catch(err => next(err));
     })
-    .post((req, res, next) => {
+    .post(cors.corsWithOptions, (req, res, next) => {
         Clients.create(req.body)
             .then((client) => {
                 res.statusCode = 200;

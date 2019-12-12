@@ -1,13 +1,15 @@
 const express = require('express');
 const Vehicles = require('../model/vehicle');
 const bodyParser = require('body-parser');
+const cors = require('./cors');
 
 const vehicleRouter = express.Router();
 
 vehicleRouter.use(bodyParser.json());
 
 vehicleRouter.route('/')
-    .get((req, res, next) => {
+    .options(cors.corsWithOptions, (req, res) => {res.sendStatus = 200;})
+    .get(cors.cors, (req, res, next) => {
         Vehicles.find(req.query)
             .then((vehicles) => {
                 res.statusCode = 200;
@@ -17,7 +19,7 @@ vehicleRouter.route('/')
             .catch((err) =>next(err))
     })
 
-    .post((req, res, next) => {
+    .post(cors.corsWithOptions, (req, res, next) => {
         Vehicles.create(req.body)
             .then((vehicle) => {
                 console.log("Vehicle Created: "+vehicle);
@@ -30,7 +32,7 @@ vehicleRouter.route('/')
             .catch((err) => {
                 next(err);
             })
-    })
+    });
 
 
 module.exports = vehicleRouter;
