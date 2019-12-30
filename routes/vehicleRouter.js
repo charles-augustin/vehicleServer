@@ -37,16 +37,16 @@ vehicleRouter.route('/:vehicleID')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
     .get(cors.cors, (req, res, next) => {
         Vehicles.findById(req.params.vehicleID)
-        .then((result) => {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
-            res.json(result);
-        },err => next(err))
-        .catch(err => next(err));
+            .then((result) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(result);
+            }, err => next(err))
+            .catch(err => next(err));
     })
 
     .put(cors.corsWithOptions, (req, res, next) => {
-        Vehicles.findByIdAndUpdate(req.params.vehicleID, {
+        Vehicles.findOneAndUpdate(req.params.vehicleID, {
             $set: req.body
         }, {
             new: true
@@ -60,7 +60,7 @@ vehicleRouter.route('/:vehicleID')
     })
 
     .delete(cors.corsWithOptions, (req, res, next) => {
-        Vehicles.findOneAndRemove({_id: req.params.vehicleID})
+        Vehicles.findOneAndRemove({ _id: req.params.vehicleID })
             .then((vehicle) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');

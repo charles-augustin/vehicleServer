@@ -6,7 +6,7 @@ const Clients = require('../model/client');
 const cors = require('./cors');
 
 clientRouter.route('/')
-    .options(cors.corsWithOptions, (req, res) => {res.sendStatus = 200;})
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
     .get(cors.cors, (req, res, next) => {
         Clients.find(req.query)
             .then((client) => {
@@ -20,10 +20,41 @@ clientRouter.route('/')
         Clients.create(req.body)
             .then((client) => {
                 res.statusCode = 200;
-                res.setHeader('Content-Type','application/json');
+                res.setHeader('Content-Type', 'application/json');
                 res.json(client);
             }, (err) => next(err))
-            .catch(err => next(err)); 
+            .catch(err => next(err));
     });
 
-    module.exports = clientRouter;
+clientRouter.route('/:clientID')
+    .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200 })
+    .get(cors.cors, (req, res, next) => {
+        Clients.findById(req.params.clientID)
+        .then((client) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(client); 
+        })
+    })
+    .put(cors.corsWithOptions, (req, res, next) => {
+        Clients.findOneAndUpdate(req.params.clientID, {
+            $set: req.body
+        })
+        .then((result) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(result);
+        }, err => next(err))
+        .catch(err => next(err))
+    })
+    .delete(cors.corsWithOptions, (req, res, next) => {
+        Clients.findOneAndDelete(req.params.clientID)
+        .then((client) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(client);
+        }, err => next(err))
+        .catch(err => next(err));
+    });
+
+module.exports = clientRouter;

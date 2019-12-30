@@ -23,6 +23,8 @@ const clientSchema = new schema({
         type:Number,
         required:true
     }
+},{
+    timestamps:true
 });
 
 var clients = mongoose.model('client', clientSchema);
