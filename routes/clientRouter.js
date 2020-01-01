@@ -34,11 +34,14 @@ clientRouter.route('/:clientID')
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.json(client); 
-        })
+        },err => next(err))
+        .catch(err => next(err));
     })
     .put(cors.corsWithOptions, (req, res, next) => {
         Clients.findOneAndUpdate(req.params.clientID, {
             $set: req.body
+        }, {
+            new: true
         })
         .then((result) => {
             res.statusCode = 200;
@@ -48,7 +51,7 @@ clientRouter.route('/:clientID')
         .catch(err => next(err))
     })
     .delete(cors.corsWithOptions, (req, res, next) => {
-        Clients.findOneAndDelete(req.params.clientID)
+        Clients.findOneAndDelete({_id: req.params.clientID})
         .then((client) => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
