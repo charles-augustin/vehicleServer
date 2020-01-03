@@ -46,7 +46,7 @@ vehicleRouter.route('/:vehicleID')
     })
 
     .put(cors.corsWithOptions, (req, res, next) => {
-        Vehicles.findOneAndUpdate(req.params.vehicleID, {
+        Vehicles.findByIdAndUpdate(req.params.vehicleID, {
             $set: req.body
         }, {
             new: true
