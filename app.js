@@ -14,6 +14,7 @@ const url = config.mongoUrl;
 
 const vehicleRouter = require('./routes/vehicleRouter');
 const clientRouter = require('./routes/clientRouter');
+const reserveRouter = require('./routes/reserveRouter');
 
 //for connecting to the mongo db
 mongoose.connect(url).then((db) => {
@@ -39,6 +40,7 @@ app.use('/users', usersRouter);
 
 app.use('/vehicles', vehicleRouter);
 app.use('/clients', clientRouter);
+app.use('/reserve', reserveRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

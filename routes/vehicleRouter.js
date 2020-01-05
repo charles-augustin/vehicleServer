@@ -7,6 +7,23 @@ const vehicleRouter = express.Router();
 
 vehicleRouter.use(bodyParser.json());
 
+// vehicleRouter.route('/get-type')
+//     .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
+//     .get(cors.cors, (req, res, next) => {
+//         Vehicles.find(req.query).distinct('Type')
+//             .then((types) => {
+//                 Vehicles.find(req.query).distinct('Color')
+//                     .then((colors) => {
+//                         res.statusCode = 200;
+//                         res.setHeader('Content-Type', 'application/json');
+//                         res.json({ color: colors, type: types });
+//                     })
+//                     .catch(err => next(err));
+//             }, err => next(err))
+//             .catch(err => next(err));
+
+//     });
+
 vehicleRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
     .get(cors.cors, (req, res, next) => {
@@ -68,5 +85,7 @@ vehicleRouter.route('/:vehicleID')
             }, err => next(err))
             .catch(err => next(err))
     });
+
+
 
 module.exports = vehicleRouter;
