@@ -12,12 +12,16 @@ const reserveSchema = new schema({
         ref: 'client',
         required: true
     },
-    reservationDate: {
+    fromDate: {
+        type: Date,
+        required: true
+    },
+    toDate: {
         type: Date,
         required: true
     }
 }, {
-    timestamps:true
+    timestamps: true
 });
 
 var reservation = mongoose.model('reserve', reserveSchema);

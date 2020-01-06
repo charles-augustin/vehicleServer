@@ -27,6 +27,9 @@ const vehicleSchema = new schema({
         type: String,
         required: true,
         unique: true
+    },
+    Available: {
+        type:String,
     }
 }, {
     timestamps: true
