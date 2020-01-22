@@ -19,6 +19,10 @@ const reserveSchema = new schema({
     toDate: {
         type: Date,
         required: true
+    },
+    status: {
+        type: String,
+        default: 'reserved'
     }
 }, {
     timestamps: true
