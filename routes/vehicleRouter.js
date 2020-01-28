@@ -24,6 +24,22 @@ vehicleRouter.use(bodyParser.json());
 
 //     });
 
+vehicleRouter.route('/updateVehicleStatus/:vehicleID')
+    .options(cors.corsWithOptions, (req, res) => {res.sendStatus = 200;})
+    .put(cors.corsWithOptions, (req, res, next) => {
+        Vehicles.findByIdAndUpdate(req.params.vehicleID, {
+            $set: req.body
+        }, {
+            new: true
+        })
+        .then((out) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(out);
+        }, err => next(err))
+        .catch(err => next(err));
+    });
+
 vehicleRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => { res.sendStatus = 200; })
     .get(cors.cors, (req, res, next) => {
