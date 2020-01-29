@@ -34,6 +34,20 @@ reserveRouter.route('/updateStatus/:reserveID')
                 res.json(result);
             }, err => next(err))
             .catch(err => next(err))
+    });
+
+reserveRouter.route('/findAll')
+    .options(cors.corsWithOptions, (req, res) => {res.sendStatus = 200;})
+    .get(cors.cors, (req, res, next) => {
+        Reserve.find(req.query)
+            .populate('vehicle')
+            .populate('client')
+            .then((reserve) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(reserve);
+            }, err => next(err))
+            .catch(err => next(err));
     })
 
 reserveRouter.route('/')
