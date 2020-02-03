@@ -78,7 +78,7 @@ router.post('/login', cors.corsWithOptions, (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/checkJWTtoken', cors.corsWithOptions, (req, res) => {
+router.get('/checkJWTtoken', cors.cors, (req, res) => {
   passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (err)
       return next(err);
@@ -95,6 +95,19 @@ router.get('/checkJWTtoken', cors.corsWithOptions, (req, res) => {
       res.json({ status: 'JWT valid', success: true, user: user });
     }
   })(req, res);
+});
+
+router.get('/logout', cors.cors, (req, res) => {
+  if(req.session) {
+    req.session.destroy();
+    res.clearCookie('session-id', {httpOnly: true, path:"/"});
+    res.redirect('/');
+  }
+  else {
+    var err = new Error('You are not logged in');
+    err.status = 403;
+    next(err);
+  }
 });
 
 module.exports = router;
