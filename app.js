@@ -16,10 +16,12 @@ const url = config.mongoUrl;
 const vehicleRouter = require('./routes/vehicleRouter');
 const clientRouter = require('./routes/clientRouter');
 const reserveRouter = require('./routes/reserveRouter');
+const chatRouter = require('./routes/chatRouter');
 
 //for connecting to the mongo db
 mongoose.connect(url).then((db) => {
   console.log("Connected to the server successfully");
+
 }, (err) => {
   console.log(err);
 });
@@ -53,6 +55,7 @@ app.use('/users', usersRouter);
 app.use('/vehicles', vehicleRouter);
 app.use('/clients', clientRouter);
 app.use('/reservation', reserveRouter);
+app.use('/chat', chatRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

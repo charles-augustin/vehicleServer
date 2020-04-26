@@ -19,18 +19,20 @@ router.get('/', function (req, res, next) {
 router.post('/signup', cors.corsWithOptions, (req, res, next) => {
   // User.findOne({username: req.body.username})
   //using register method for passport
-  User.register(new User({ username: req.body.username }), req.body.password, (err, user) => {
+  User.register(new User({ username: req.body.username, name: req.body.name, email: req.body.email}),       req.body.password, (err, user) => {
     if (err) {
       res.statusCode = 500;
       res.setHeader('Content-Type', 'application/json');
       res.json({ err: err });
       console.log("if loop");
-
     }
     else {
       //adding first name and last name of user to db
-      if (req.body.username)
+      if (req.body.username){
         user.username = req.body.username;
+        user.name = req.body.name;
+        user.email = req.body.email;
+      }
       user.save((err, user) => {
         if (err) {
           res.statusCode = 500;
@@ -98,9 +100,9 @@ router.get('/checkJWTtoken', cors.cors, (req, res) => {
 });
 
 router.get('/logout', cors.cors, (req, res) => {
-  if(req.session) {
+  if (req.session) {
     req.session.destroy();
-    res.clearCookie('session-id', {httpOnly: true, path:"/"});
+    res.clearCookie('session-id', { httpOnly: true, path: "/" });
     res.redirect('/');
   }
   else {
