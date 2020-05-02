@@ -56,6 +56,7 @@ app.use('/vehicles', vehicleRouter);
 app.use('/clients', clientRouter);
 app.use('/reservation', reserveRouter);
 app.use('/chat', chatRouter);
+app.use('/uploads', express.static('uploads'))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -2,6 +2,18 @@ const express = require('express');
 const Vehicles = require('../model/vehicle');
 const bodyParser = require('body-parser');
 const cors = require('./cors');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'uploads');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.originalname);
+    }
+})
+
+const upload = multer({storage:storage});
 
 const vehicleRouter = express.Router();
 
@@ -52,8 +64,21 @@ vehicleRouter.route('/')
             .catch((err) => next(err))
     })
 
-    .post(cors.corsWithOptions, (req, res, next) => {
-        Vehicles.create(req.body)
+    .post(cors.corsWithOptions, upload.single('VehicleImage'), (req, res, next) => {
+        console.log(req.file);
+
+        const vehicle = new Vehicles({
+            Type: req.body.Type,
+            Make: req.body.Make,
+            Model: req.body.Model,
+            Year: req.body.Year,
+            Color: req.body.Color,
+            PlateNo: req.body.PlateNo,
+            Available: req.body.Available,
+            ImageURL: req.file.path
+        })
+        
+        vehicle.save()
             .then((vehicle) => {
                 console.log("Vehicle Created: " + vehicle);
                 res.statusCode = 200;

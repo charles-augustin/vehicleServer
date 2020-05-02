@@ -31,7 +31,11 @@ const vehicleSchema = new schema({
     Available: {
         type: String,
         default:"Yes"
-    }
+    },
+    ImageURL: {
+        type: String,
+        required: true
+    } 
 }, {
     timestamps: true
 });
