@@ -103,9 +103,29 @@ vehicleRouter.route('/:vehicleID')
             .catch(err => next(err));
     })
 
-    .put(cors.corsWithOptions, (req, res, next) => {
+    .put(cors.corsWithOptions, upload.single('VehicleImage'), (req, res, next) => {
+
+        const vehicle = new Vehicles({
+            Type: req.body.Type,
+            Make: req.body.Make,
+            Model: req.body.Model,
+            Year: req.body.Year,
+            Color: req.body.Color,
+            PlateNo: req.body.PlateNo,
+            ImageURL: req.file.path
+        });
+
+        console.log(vehicle);
+        
+
         Vehicles.findByIdAndUpdate(req.params.vehicleID, {
-            $set: req.body
+            $set: {'Type': vehicle.Type,
+            'Make': vehicle.Make,
+            'Model': vehicle.Model,
+            'Year': vehicle.Year,
+            'Color': vehicle.Color,
+            'PlateNo': vehicle.PlateNo,
+            'ImageURL': vehicle.ImageURL}
         }, {
             new: true
         })
