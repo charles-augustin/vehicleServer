@@ -19,7 +19,7 @@ const reserveRouter = require('./routes/reserveRouter');
 const chatRouter = require('./routes/chatRouter');
 
 //for connecting to the mongo db
-mongoose.connect(url).then((db) => {
+mongoose.connect(process.env.MONGODB_URI || url).then((db) => {
   console.log("Connected to the server successfully");
 
 }, (err) => {
