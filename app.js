@@ -17,6 +17,7 @@ const vehicleRouter = require('./routes/vehicleRouter');
 const clientRouter = require('./routes/clientRouter');
 const reserveRouter = require('./routes/reserveRouter');
 const chatRouter = require('./routes/chatRouter');
+const favoriteRouter = require('./routes/favoriteRouter');
 
 //for connecting to the mongo db
 mongoose.connect(process.env.MONGODB_URI || url).then((db) => {
@@ -56,7 +57,9 @@ app.use('/vehicles', vehicleRouter);
 app.use('/clients', clientRouter);
 app.use('/reservation', reserveRouter);
 app.use('/chat', chatRouter);
-app.use('/uploads', express.static('uploads'))
+app.use('/favorites', favoriteRouter);
+
+app.use('/uploads', express.static('uploads'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
