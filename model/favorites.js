@@ -2,15 +2,13 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const favoriteSchema = new schema({
-    vehicle: {
+    vehicles: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'vehicle',
-        required: true
-    },
+        ref: 'vehicle'
+    }],
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-        required: true
+        ref: 'user'
     }
 }, {
     timestamps: true
