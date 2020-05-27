@@ -11,6 +11,7 @@ favoriteRouter.route('/')
     .options(cors.corsWithOptions, (req, res) => res.sendStatus = 200)
     .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
         Favorites.findOne({ user: req.user._id })
+            .populate('vehicles')
             .then((favorite) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
