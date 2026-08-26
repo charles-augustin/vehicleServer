@@ -26,7 +26,7 @@
   },
   "devDependencies": {
     "constantinople": "^4.0.1",
-    "minimist": "^1.2.5"
+    "minimist": "^1.2.6"
   },
   "resolutions": {
     "minimist": "^1.2.5"
